@@ -16,11 +16,15 @@ class CreateAlarmaActsTable extends Migration
         Schema::create('alarma_acts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('idAlarma')->unsigned();
-            $table->foreign('idAlarma')->references('id')->on('e-alarmas');
-            $table->bigInteger('idEvento')->unsigned();
-            $table->foreign('idEvento')->references('id')->on('act-eventos');
+            $table->bigInteger('codResp')->unsigned();
             $table->dateTime('fechaHoraCierre');
-            $table->string('glosaCierre');
+            $table->bigInteger('codResp')->unsigned();
+            $table->string('evidencia');
+            $table->string('estado');
+            $table->string('comentario');
+            $table->foreign('idAlarma')->references('id')->on('e-alarmas');
+            $table->foreign('idEvento')->references('id')->on('act-eventos');
+            $table->foreign('codResp')->references('codResp')->on('resp_alarmas');
             $table->timestamps();
         });
     }

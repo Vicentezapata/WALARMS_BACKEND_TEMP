@@ -15,10 +15,14 @@ class CreateBitacoraAlarmasTable extends Migration
     {
         Schema::create('bitacora_alarmas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('idAlarmaAct')->unsigned();
-            $table->foreign('idAlarmaAct')->references('id')->on('alarma-acts');
-            $table->date('fecha');
-            $table->time('hora');
+            $table->bigInteger('idEvento')->unsigned();
+            $table->foreign('idEvento')->references('id')->on('alarma-acts');
+            $table->string('respNomEvent');
+            $table->string('fecha');
+            $table->string('hora');
+            $table->string('estado');
+            $table->bigInteger('idUser')->unsigned();
+            $table->foreign('idUser')->references('id')->on('users');
             $table->timestamps();
         });
     }

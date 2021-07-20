@@ -21,6 +21,10 @@ class CreateActEventosTable extends Migration
             $table->foreign('idActividad')->references('id')->on('actividades');
             $table->dateTime('fechaHoraIE');
             $table->dateTime('fechaHoraFE');
+            $table->string('participantes');
+            $table->string('ubicacion');
+            $table->string('descripcion');
+            $table->string('anticipacion');
             $table->timestamps();
         });
     }

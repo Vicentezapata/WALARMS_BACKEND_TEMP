@@ -15,8 +15,11 @@ class CreateTypeEalarmasTable extends Migration
     {
         Schema::create('e_alarmas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
             $table->boolean('persistente');
+            $table->bigInteger('idUser')->unsigned();
+            $table->foreign('idUser')->references('id')->on('users');
+            $table->bigInteger('idActividad')->unsigned();
+            $table->foreign('idActividad')->references('id')->on('actividades');
             $table->timestamps();
         });
     }
