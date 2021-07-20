@@ -1,0 +1,60 @@
+version: '3.1'
+
+services:
+  db_walarms:  
+    image: mysql:5.7
+    container_name: db_walarms
+    hostname: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=W2a0l2a1rms
+      - MYSQL_DATABASE=walarms_db
+      - MYSQL_USER=walarms_db
+      - MYSQL_PASSWORD=W2a0l2a1rms
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:5556:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  web_walarms:
+    build: .
+    container_name: walarms_app
+    hostname: walarms_app
+    restart: unless-stopped
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8300:80"
+    depends_on:
+      - db_walarms
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    links:
+      - db_walarms:db
+    ports:
+      - "9006:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=W2a0l2a1rms
+      - MYSQL_DATABASE=walarms_db
+      - MYSQL_USER=walarms_db
+      - MYSQL_PASSWORD=W2a0l2a1rms
+
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - 9000:9000
+      - 8000:8000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+volumes:
+  mysql-data:
+  portainer_data:
+
+networks:
+  default:
