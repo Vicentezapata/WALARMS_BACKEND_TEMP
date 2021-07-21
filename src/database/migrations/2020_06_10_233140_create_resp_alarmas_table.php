@@ -14,8 +14,7 @@ class CreateRespAlarmasTable extends Migration
     public function up()
     {
         Schema::create('resp_alarmas', function (Blueprint $table) {
-            $table->bigInteger('codResp');
-            $table->primary('codResp');
+            $table->bigIncrements('codResp');
             $table->longText('nombre');
             $table->timestamps();
         });

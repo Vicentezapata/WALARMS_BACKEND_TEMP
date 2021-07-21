@@ -16,7 +16,7 @@ class CreateActEventosTable extends Migration
         Schema::create('act_eventos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('idCabEvento')->unsigned();
-            $table->foreign('idCabEvento')->references('id')->on('cabecera-eventos');
+            $table->foreign('idCabEvento')->references('id')->on('cabecera_eventos');
             $table->bigInteger('idActividad')->unsigned();
             $table->foreign('idActividad')->references('id')->on('actividades');
             $table->dateTime('fechaHoraIE');

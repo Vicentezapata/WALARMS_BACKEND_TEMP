@@ -16,7 +16,7 @@ class CreateBitacoraAlarmasTable extends Migration
         Schema::create('bitacora_alarmas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('idEvento')->unsigned();
-            $table->foreign('idEvento')->references('id')->on('alarma-acts');
+            $table->foreign('idEvento')->references('id')->on('alarma_acts');
             $table->string('respNomEvent');
             $table->string('fecha');
             $table->string('hora');

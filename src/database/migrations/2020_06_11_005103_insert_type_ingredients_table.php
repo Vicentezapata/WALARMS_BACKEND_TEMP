@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class InsertTypeIngredientsTable extends Migration
+class InsertUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class InsertTypeIngredientsTable extends Migration
      */
     public function up()
     {
-        /*DB::table('type_ingredients')->insert(
+        DB::table('users')->insert(
             [
-                ['name' => 'Lacteos','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
-                ['name' => 'Jugos','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
-                ['name' => 'Frutas','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
+                ['name' => 'Admin','email' => 'admin@walarms.cl','password' => 'walarms.2021','type_user' => '1','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')]
             ]
-            );*/
+            );
 
     }
 

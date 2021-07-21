@@ -18,12 +18,12 @@ class CreateAlarmaActsTable extends Migration
             $table->bigInteger('idAlarma')->unsigned();
             $table->bigInteger('codResp')->unsigned();
             $table->dateTime('fechaHoraCierre');
-            $table->bigInteger('codResp')->unsigned();
+            $table->bigInteger('idEvento')->unsigned();
             $table->string('evidencia');
             $table->string('estado');
             $table->string('comentario');
-            $table->foreign('idAlarma')->references('id')->on('e-alarmas');
-            $table->foreign('idEvento')->references('id')->on('act-eventos');
+            $table->foreign('idAlarma')->references('id')->on('e_alarmas');
+            $table->foreign('idEvento')->references('id')->on('act_eventos');
             $table->foreign('codResp')->references('codResp')->on('resp_alarmas');
             $table->timestamps();
         });
