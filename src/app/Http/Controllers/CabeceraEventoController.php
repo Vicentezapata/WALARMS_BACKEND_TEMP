@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\CabeceraEvento;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class CabeceraEventoController extends Controller
 {
         /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return response()->json(['users'=>$user]);
+        $header = CabeceraEvento::all();
+        return response()->json(['headers'=>$header]);
     }
 
     /**
