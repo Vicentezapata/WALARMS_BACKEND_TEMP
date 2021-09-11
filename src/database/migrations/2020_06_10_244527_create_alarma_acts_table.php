@@ -17,7 +17,7 @@ class CreateAlarmaActsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('idAlarma')->unsigned();
             $table->bigInteger('codResp')->unsigned();
-            $table->dateTime('fechaHoraCierre');
+            $table->string('fechaHoraCierre');
             $table->bigInteger('idEvento')->unsigned();
             $table->string('evidencia');
             $table->string('estado');

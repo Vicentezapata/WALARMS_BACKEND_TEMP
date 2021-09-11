@@ -32,3 +32,10 @@ Route::post('/users/login','UserController@login')->name('users.login');
 */
 Route::get('/header/index','CabeceraEventoController@index')->name('header.index');
 
+/*___________________________________
+ |                                   | 
+ |       Activities's API ROUTE        |
+ |___________________________________|
+*/
+Route::post('/activity/store','ActividadController@store')->name('activity.store');
+

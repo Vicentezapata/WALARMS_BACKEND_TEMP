@@ -25,6 +25,14 @@ class InsertDefaultConfig extends Migration
                 ['nombre' => 'Recordatorio','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')]
             ]
             );
+        DB::table('resp_alarmas')->insert(
+            [
+                ['nombre' => 'Sin finalizar','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
+                ['nombre' => 'Finalizada','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
+                ['nombre' => 'Cancelada','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')],
+                ['nombre' => 'Pospuesta','created_at'=>DB::raw('CURRENT_TIMESTAMP'),'updated_at'=>DB::raw('CURRENT_TIMESTAMP')]
+            ]
+            );
 
     }
 

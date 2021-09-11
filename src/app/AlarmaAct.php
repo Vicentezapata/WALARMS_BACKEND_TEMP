@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AlarmaAct extends Model
 {
+    public $table = "alarma_acts";
     /*public function ingredientsRecipe(){
         return $this->hasMany('App\IngredientsRecipe','id_recipes','id');
     }*/
