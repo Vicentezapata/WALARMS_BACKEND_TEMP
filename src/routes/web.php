@@ -38,4 +38,5 @@ Route::get('/header/index','CabeceraEventoController@index')->name('header.index
  |___________________________________|
 */
 Route::post('/activity/store','ActividadController@store')->name('activity.store');
+Route::post('/activity/index','ActividadController@index')->name('activity.index');
 

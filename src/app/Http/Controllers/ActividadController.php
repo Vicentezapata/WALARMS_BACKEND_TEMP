@@ -9,9 +9,25 @@ use App\AlarmaAct;
 use App\BitacoraAlarma;
 use App\CabeceraEvento;
 use Illuminate\Http\Request;
+use DB;
 
 class ActividadController extends Controller
 {
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $conditional = $request['condicional'];
+        $user      = $request['user'];
+        $result      = DB::select("SELECT actEvent.id,actEvent.idCabEvento,actEvent.idActividad,actEvent.fechaHoraIE,actEvent.fechaHoraFE,activit.nombre, alarmacts.codResp FROM act_eventos as actEvent,actividades as activit, alarma_acts as alarmacts WHERE idActividad in (SELECT id FROM actividades ".$conditional." or participantes like '%".$user."%') and actEvent.idActividad = activit.id and alarmacts.idEvento = actEvent.id");
+        return $result;
+        //DB::select('select * from users where active = ?', [1])
+    }
 
     /**
      * Store a newly created resource in storage.

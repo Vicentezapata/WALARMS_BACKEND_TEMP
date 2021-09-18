@@ -24,6 +24,6 @@ class VerifyCsrfToken extends Middleware
         /*Header API ROUTES*/
         '/header/index',
         /*Activities API ROUTES*/
-        '/activity/store'
+        '/activity/store','/activity/index'
     ];
 }
