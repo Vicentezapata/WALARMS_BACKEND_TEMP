@@ -18,7 +18,7 @@ class CreateActEventosTable extends Migration
             $table->bigInteger('idCabEvento')->unsigned();
             $table->foreign('idCabEvento')->references('id')->on('cabecera_eventos');
             $table->bigInteger('idActividad')->unsigned();
-            $table->foreign('idActividad')->references('id')->on('actividades');
+            $table->foreign('idActividad')->references('id')->on('actividades')->onDelete('cascade');
             $table->string('fechaHoraIE');
             $table->string('fechaHoraFE');
             $table->string('participantes');

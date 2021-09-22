@@ -17,9 +17,9 @@ class CreateEalarmasTable extends Migration
             $table->bigIncrements('id');
             $table->boolean('persistente');
             $table->bigInteger('idUser')->unsigned();
-            $table->foreign('idUser')->references('id')->on('users');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('idActividad')->unsigned();
-            $table->foreign('idActividad')->references('id')->on('actividades');
+            $table->foreign('idActividad')->references('id')->on('actividades')->onDelete('cascade');
             $table->timestamps();
         });
     }

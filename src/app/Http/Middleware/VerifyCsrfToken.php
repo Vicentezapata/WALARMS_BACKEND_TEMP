@@ -20,10 +20,14 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         /*Users API ROUTES*/
-        '/users/index','users/store','/users/update','/users/delete','/users/login',
+        '/users/index','users/store','/users/update','/users/delete','/users/login','/users/indexForAproveEvent',
         /*Header API ROUTES*/
-        '/header/index',
+        '/header/index','/respalarms/index',
         /*Activities API ROUTES*/
-        '/activity/store','/activity/index'
+        '/activity/store','/activity/index','/activity/detailByDate','/activity/delete','/activity/update','/activity/indexListActivities',
+        '/activity/indexListActivitiesByDate','/activity/indexListActivitiesByFilter','/activity/indexForAproveEvent','/activity/updateByNotification','/activity/updateFinishEvent',
+        '/activity/indexApprove','/activity/approve','/activity/indexAllApprove','/activity/updateForApprove',
+        /*Bitacora API ROUTES*/
+        '/bitacora/index','/bitacora/indexByDate','/bitacora/indexByFilter','/bitacora/indexByActivitySelected'
     ];
 }

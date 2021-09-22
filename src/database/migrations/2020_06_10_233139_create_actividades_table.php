@@ -17,7 +17,7 @@ class CreateActividadesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->bigInteger('idUser')->unsigned();
-            $table->foreign('idUser')->references('id')->on('users');
+            $table->foreign('idUser')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,20 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\CabeceraEvento;
+
+use App\RespAlarma;
 use Illuminate\Http\Request;
 
-class CabeceraEventoController extends Controller
+class RespAlarmaController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $header = CabeceraEvento::all();
+        $header = RespAlarma::all();
         return response()->json(['headers'=>$header]);
     }
-
 }

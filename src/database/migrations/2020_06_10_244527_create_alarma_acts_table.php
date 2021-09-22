@@ -23,7 +23,7 @@ class CreateAlarmaActsTable extends Migration
             $table->string('estado');
             $table->string('comentario');
             $table->foreign('idAlarma')->references('id')->on('e_alarmas');
-            $table->foreign('idEvento')->references('id')->on('act_eventos');
+            $table->foreign('idEvento')->references('id')->on('act_eventos')->onDelete('cascade');
             $table->foreign('codResp')->references('codResp')->on('resp_alarmas');
             $table->timestamps();
         });

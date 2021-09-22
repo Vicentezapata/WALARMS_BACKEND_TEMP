@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
+use DB;
 
 class UserController extends Controller
 {
@@ -14,6 +15,12 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
+        return response()->json(['users'=>$user]);
+    }
+
+    public function indexForAproveEvent()
+    {
+        $user = DB::select("select id,name,email from users");
         return response()->json(['users'=>$user]);
     }
 
@@ -43,19 +50,20 @@ class UserController extends Controller
     public function update(Request $request)
     {
         //METODO 1
-        /*$user = TypeIngredient::where('id',$request['id'])->first();
+        $user = User::where('id',$request['idUser'])->first();
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->password = $request['password'];
-        $user->save();*/
+        $user->type_user = $request['type_user'];
+        $user->save();
         //METODO 2
-        $user = User::where('id',$request['id'])->update(['name'=>$request['name'],'password'=>$request['password'],'email'=>$request['email'],'type_user'=>$request['type_user']]);
+        //$user = User::where('id',$request['idUser'])->update(['name'=>$request['name'],'password'=>$request['password'],'email'=>$request['email'],'type_user'=>$request['type_user']]);
         return $user;
     }
 
     public function delete(Request $request)
     {
-        $user = User::find($request['id']);
+        $user = User::find($request['idUser']);
         $user->delete();
         return $user;
     }
