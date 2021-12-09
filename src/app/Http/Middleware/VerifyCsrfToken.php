@@ -28,6 +28,9 @@ class VerifyCsrfToken extends Middleware
         '/activity/indexListActivitiesByDate','/activity/indexListActivitiesByFilter','/activity/indexForAproveEvent','/activity/updateByNotification','/activity/updateFinishEvent',
         '/activity/indexApprove','/activity/approve','/activity/indexAllApprove','/activity/updateForApprove',
         /*Bitacora API ROUTES*/
-        '/bitacora/index','/bitacora/indexByDate','/bitacora/indexByFilter','/bitacora/indexByActivitySelected'
+        '/bitacora/index','/bitacora/indexByDate','/bitacora/indexByFilter','/bitacora/indexByActivitySelected',
+        /*OFFLINE API ROUTES*/
+        '/offline/datauser',
+        '/offline/update'
     ];
 }

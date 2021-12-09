@@ -8,8 +8,10 @@ use App\ActEvento;
 use App\AlarmaAct;
 use App\BitacoraAlarma;
 use App\CabeceraEvento;
+use App\User;
 use Illuminate\Http\Request;
 use DB;
+use Log;
 
 class ActividadController extends Controller
 {
@@ -533,5 +535,120 @@ class ActividadController extends Controller
         $bitacoraAlarma->estado       = "Finalizado";
         $bitacoraAlarma->idUser       = "0000";
         return $bitacoraAlarma;
+    }
+
+    public function getalldatauser(Request $request)
+    {
+        Log::info($request);
+        $idUser = $request['idUser'];
+        //OBTENER DATA
+        $actividades      = DB::select("SELECT * FROM actividades where idUser =".$idUser);
+        $act_eventos      = DB::select("SELECT * FROM `act_eventos` WHERE idActividad in (SELECT id FROM actividades where idUser = ".$idUser.")");
+        $alarma_acts      = DB::select("SELECT * FROM `alarma_acts` where idEvento in (SELECT id FROM `act_eventos` WHERE idActividad in (SELECT id FROM actividades where idUser =  ".$idUser." ))");
+        $bitacora_alarmas = DB::select("SELECT * FROM `bitacora_alarmas` WHERE idUser = ".$idUser);
+        $cabecera_eventos = DB::select("SELECT * FROM `cabecera_eventos`");
+        $e_alarmas        = DB::select("SELECT * FROM `e_alarmas` WHERE idUser = ".$idUser);
+        $resp_alarmas     = DB::select("SELECT * FROM `resp_alarmas`");
+        $users     = DB::select("SELECT * FROM `users`");
+        //RETURN
+        return response()->json(['actividades'=>$actividades,'act_eventos'=>$act_eventos,'alarma_acts'=>$alarma_acts,'bitacora_alarmas'=>$bitacora_alarmas,'cabecera_eventos'=>$cabecera_eventos,'e_alarmas'=>$e_alarmas,'resp_alarmas'=>$resp_alarmas,'users'=>$users]);
+    }
+
+    public function updateCloudDatabase(Request $request)
+    {
+        $bitacoraAlarma = new BitacoraAlarma();
+        $data = $request['dataTableUser'];
+        $users = $request['users'];
+        $idUser = $users[0]['id'];
+        Log::info($request);
+        //ELIMINACION DATA
+        DB::delete("DELETE FROM actividades where idUser =".$idUser);
+        DB::delete("DELETE FROM `act_eventos` WHERE idActividad in (SELECT id FROM actividades where idUser = ".$idUser.")");
+        DB::delete("DELETE FROM `alarma_acts` where idEvento in (SELECT id FROM `act_eventos` WHERE idActividad in (SELECT id FROM actividades where idUser =  ".$idUser." ))");
+        DB::delete("DELETE FROM `bitacora_alarmas` WHERE idUser = ".$idUser);
+        DB::delete("DELETE FROM `e_alarmas` WHERE idUser = ".$idUser);
+        
+        $act_eventos = $request['act_eventos'];
+        $actividades = $request['actividades'];
+        $alarma_acts = $request['alarma_acts'];
+        $bitacora_alarmas = $request['bitacora_alarmas'];
+        $e_alarmas = $request['e_alarmas'];
+        
+
+        for ($i=0; $i <count($actividades) ; $i++) { 
+            $actividad      = new Actividad();
+            $actividad->id       =$this->cleanText($actividades[$i]['id']);
+            $actividad->idUser   =$this->cleanText($actividades[$i]['idUser']);
+            $actividad->nombre   =$this->cleanText($actividades[$i]['nombre']);
+            $actividad->save();
+        }
+
+        for ($i=0; $i <count($e_alarmas) ; $i++) { 
+            $ealarma                       = new Ealarma();
+            $ealarma->id                   =$this->cleanText($e_alarmas[$i]['id']);
+            $ealarma->idActividad          =$this->cleanText($e_alarmas[$i]['idActividad']);
+            $ealarma->idUser               =$this->cleanText($e_alarmas[$i]['idUser']);
+            $ealarma->persistente          =$this->cleanText($e_alarmas[$i]['persistente']);
+            $ealarma->save();
+        }
+
+        for ($i=0; $i <count($act_eventos) ; $i++) { 
+            $actevento                = new ActEvento();
+            $actevento->anticipacion  =$this->cleanText($act_eventos[$i]['anticipacion']);
+            $actevento->descripcion   =$this->cleanText($act_eventos[$i]['descripcion']);
+            $actevento->fechaHoraFE   =$this->cleanText($act_eventos[$i]['fechaHoraFE']);
+            $actevento->fechaHoraIE   =$this->cleanText($act_eventos[$i]['fechaHoraIE']);
+            $actevento->id            =$this->cleanText($act_eventos[$i]['id']);
+            $actevento->idActividad   =$this->cleanText($act_eventos[$i]['idActividad']);
+            $actevento->idCabEvento   =$this->cleanText($act_eventos[$i]['idCabEvento']);
+            $actevento->participantes =$this->cleanText($act_eventos[$i]['participantes']);
+            $actevento->ubicacion     =$this->cleanText($act_eventos[$i]['ubicacion']);
+            $actevento->save();
+        }
+
+        for ($i=0; $i <count($alarma_acts) ; $i++) { 
+            $alarmaAct                   = new AlarmaAct();
+            $alarmaAct->codResp          =$this->cleanText($alarma_acts[$i]['codResp']);
+            $alarmaAct->comentario       =$this->cleanText($alarma_acts[$i]['comentario']);
+            $alarmaAct->estado           =$this->cleanText($alarma_acts[$i]['estado']);
+            $alarmaAct->evidencia        =$this->cleanText($alarma_acts[$i]['evidencia']);
+            $alarmaAct->fechaHoraCierre  =$this->cleanText($alarma_acts[$i]['fechaHoraCierre']);
+            $alarmaAct->id               =$this->cleanText($alarma_acts[$i]['id']);
+            $alarmaAct->idAlarma         =$this->cleanText($alarma_acts[$i]['idAlarma']);
+            $alarmaAct->idEvento         =$this->cleanText($alarma_acts[$i]['idEvento']);
+            $alarmaAct->save();
+        }
+
+        for ($i=0; $i <count($bitacora_alarmas) ; $i++) { 
+            $bitacoraAlarmaa = new BitacoraAlarma();
+            $bitacoraAlarmaa->estado       =$this->cleanText($bitacora_alarmas[$i]['estado']);
+            $bitacoraAlarmaa->fecha        =$this->cleanText($bitacora_alarmas[$i]['fecha']);
+            $bitacoraAlarmaa->hora         =$this->cleanText($bitacora_alarmas[$i]['hora']);
+            $bitacoraAlarmaa->id           =$this->cleanText($bitacora_alarmas[$i]['id']);
+            $bitacoraAlarmaa->idEvento     =$this->cleanText($bitacora_alarmas[$i]['idEvento']);
+            $bitacoraAlarmaa->idUser       =$this->cleanText($bitacora_alarmas[$i]['idUser']);
+            $bitacoraAlarmaa->respNomEvent =$this->cleanText($bitacora_alarmas[$i]['respNomEvent']);
+            $bitacoraAlarmaa->save();
+        }
+
+        
+
+        $bitacoraAlarma->id           = 111;
+        $bitacoraAlarma->idEvento     = 111;
+        $bitacoraAlarma->respNomEvent = "SAMPLE";
+        $bitacoraAlarma->fecha        = date('d-m-Y');
+        $bitacoraAlarma->hora         = date('H:i:s');
+        $bitacoraAlarma->estado       = "Finalizado";
+        $bitacoraAlarma->idUser       = "0000";
+        return $bitacoraAlarma;
+    }
+    public function cleanText($text)
+    {
+        $result = $text;
+        if($text=="N/A"){
+            $result ="";
+        }
+        return $result;
+
     }
 }

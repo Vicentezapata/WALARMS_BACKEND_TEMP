@@ -63,3 +63,10 @@ Route::post('/bitacora/index','BitacoraAlarmaController@index')->name('bitacora.
 Route::post('/bitacora/indexByDate','BitacoraAlarmaController@indexByDate')->name('bitacora.indexByDate');
 Route::post('/bitacora/indexByFilter','BitacoraAlarmaController@indexByFilter')->name('bitacora.indexByFilter');
 Route::post('/bitacora/indexByActivitySelected','BitacoraAlarmaController@indexByActivitySelected')->name('bitacora.indexByActivitySelected');
+/*___________________________________
+ |                                   | 
+ |        OFFLINE's API ROUTE       |
+ |___________________________________|
+*/
+Route::post('/offline/datauser','ActividadController@getalldatauser')->name('activity.getalldatauser');
+Route::post('/offline/update','ActividadController@updateCloudDatabase')->name('activity.updateCloudDatabase');
